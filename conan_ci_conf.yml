@@ -3,14 +3,18 @@ profiles:
    - ./profiles/osx_32
 
 leaves:
-   - libpng/1.6.23
+   - Poco/1.7.5
    
 repos:
    - zlib/1.2.8: 
        url: https://github.com/lasote/conan-zlib.git
        branch: release/1.2.8
 
-   - libpng/1.6.23:
-       url: https://github.com/lasote/conan-libpng.git
-       branch: release/1.6.23
+   - Poco/1.7.5:
+       url: https://github.com/lasote/conan-poco.git
+       branch: release/1.7.5
+
+   - OpenSSL/1.0.2i:
+       url: https://github.com/lasote/conan-openssl.git
+       branch: release/1.0.2i
 
