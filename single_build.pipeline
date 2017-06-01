@@ -1,0 +1,43 @@
+properties([parameters([string(description: 'Recipe repository URL', name: 'recipe_repo_url', defaultValue: 'https://github.com/lasote/conan-zlib.git'),
+                        string(description: 'Recipe repository branch', name: 'recipe_repo_branch', defaultValue: 'release/1.2.11'),
+                        string(description: 'Config repository URL', name: 'conf_repo_url', defaultValue: 'https://github.com/lasote/conf_jenkins_test.git'),
+                        string(description: 'Config repository branch', name: 'conf_repo_branch', defaultValue: 'master'),
+                        string(description: 'Artifactory instance name', name: 'artifactory_name', defaultValue: 'artifactory'),
+                        string(description: 'Artifactory repo name', name: 'artifactory_repo_name', defaultValue: 'conan-local')])])
+          
+
+node {
+    stage("Configure/Get repositories")
+
+    def profiles = []
+    def conf_repo_dir = ""
+    dir("_conf_repo"){
+        git branch: params.conf_repo_branch, url: params.conf_repo_url
+        def data = readYaml file: "conan_ci_conf.yml"
+        profiles = data.profiles
+        conf_repo_dir = pwd()
+    }
+    def server = Artifactory.server params.artifactory_name
+    def client = Artifactory.newConanClient()
+    def serverName = client.remote.add server: server, repo: params.artifactory_repo_name
+    client.run(command: "remote remove conan.io")
+
+    dir("_lib_repo"){
+        git branch: params.recipe_repo_branch, url: params.recipe_repo_url
+    }
+    
+    stage("Build packages"){
+        // For each profile
+        dir("_lib_repo"){
+            for(int i=0;i<profiles.size();i++){
+                client.run(command: "test_package --update --profile " + conf_repo_dir + "/" + profiles[i])
+            }
+        }
+    }
+    
+    stage("Upload Artifactory"){
+        String command = "upload * -r ${serverName} --all -c"
+        client.run(command: command)
+    }
+}
+
