@@ -5,6 +5,10 @@ profiles:
 leaves:
    - Poco/1.7.5
    
+artifactory:
+   name: artifactory
+   repo: conan-local
+   
 repos:
    zlib/1.2.8: 
      url: https://github.com/lasote/conan-zlib.git
