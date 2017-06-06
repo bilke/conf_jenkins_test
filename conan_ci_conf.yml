@@ -5,6 +5,10 @@ leaves:
           - ./profiles/osx_64
           - ./profiles/osx_32
    
+artifactory:
+   name: artifactory
+   repo: conan-local
+   
 repos:
    zlib/1.2.8: 
      url: https://github.com/lasote/conan-zlib.git
