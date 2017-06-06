@@ -1,9 +1,9 @@
 
 leaves:
-   - Poco/1.7.5: 
-       profiles:
-          - ./profiles/osx_64
-          - ./profiles/osx_32
+   Poco/1.7.5: 
+     profiles:
+        - ./profiles/osx_64
+        - ./profiles/osx_32
    
 artifactory:
    name: artifactory
