@@ -1,20 +1,22 @@
-profiles:
-   - ./profiles/osx_64
-   - ./profiles/osx_32
 
 leaves:
-   - Poco/1.7.5
+   - Poco/1.7.5: 
+       profiles:
+          - ./profiles/osx_64
+          - ./profiles/osx_32
    
 repos:
    zlib/1.2.8: 
      url: https://github.com/lasote/conan-zlib.git
      branch: release/1.2.8
+     dir: ./
 
    Poco/1.7.5:
      url: https://github.com/lasote/conan-poco.git
      branch: release/1.7.5
+     dir: ./
 
    OpenSSL/1.0.2i:
      url: https://github.com/lasote/conan-openssl.git
      branch: release/1.0.2i
-
+     dir: ./
