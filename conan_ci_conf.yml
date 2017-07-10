@@ -6,8 +6,8 @@ leaves:
         - ./profiles/osx_32
    
 artifactory:
-   name: artifactory
-   repo: conan-local
+   name: ogs
+   repo: conan
    
 repos:
    zlib/1.2.8: 
